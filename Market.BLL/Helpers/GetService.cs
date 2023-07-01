@@ -42,9 +42,9 @@ namespace Market.BLL.Helpers
 
             return (List<string>)roles;
         }
-        public async Task<Shop> GetCurrentUserShop()
+        public async Task<Shop> GetUserShop(int userId)
         {
-            var user = await GetCurrentUser();
+            var user = await _userRepository.GetByIdAsync(userId);
             if (user.ShopId == null)
             {
                 return null;

@@ -1,5 +1,6 @@
 ﻿using Market.BLL.Helpers;
 using Market.DAL.Entities.Identity;
+using Market.Domain.DTOs;
 using Market.Domain.Requests;
 using Market.Domain.Responses;
 using Microsoft.AspNetCore.Identity;
@@ -56,12 +57,15 @@ namespace Market.BLL.AuthBL.Services
         {
             var user = await _getService.GetCurrentUser();
             var roles = await _getService.GetUserRoles(user.Id);
-            var shop = await _getService.GetCurrentUserShop();
+            var shop = await _getService.GetUserShop(user.Id);
+            var profileDTO = new ProfileDTO { Id = user.Id, FullName = user.FullName
+                , Roles = roles, UserName = user.UserName, ShopName = null };
             if (shop == null)
             {
-                return new ProfileResponse(200, true, null, user.UserName, user.FullName, null, roles);
+                return new ProfileResponse(200, true, null, profileDTO);
             }
-            return new ProfileResponse(200, true, null, user.UserName, user.FullName, shop.Name, roles);
+            profileDTO.ShopName = shop.Name;
+            return new ProfileResponse(200, true, null, profileDTO);
         }
     }
 }

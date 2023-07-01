@@ -31,7 +31,8 @@ builder.Services.AddTransient<AuthService>();
 builder.Services.AddTransient<GetService>();
 builder.Services.AddTransient<TokenService>();
 builder.Services.AddTransient<AdminService>();
-builder.Services.AddTransient<ManagerService>();
+builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<SellerManagerService>();
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 

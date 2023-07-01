@@ -41,9 +41,17 @@ namespace Market.DAL.Data
             base.OnModelCreating(modelBuilder);
 
             //Проверка на уникальность имени товара в рамках магазина
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Shop)
+                .WithMany(s => s.Products)
+                .HasForeignKey(p => p.ShopId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Product>()
                 .HasIndex(p => new { p.Name, p.ShopId })
                 .IsUnique();
+
             modelBuilder.Entity<Shop>()
                 .HasOne(s => s.Manager)
                 .WithOne()

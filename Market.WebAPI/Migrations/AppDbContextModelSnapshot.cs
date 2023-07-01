@@ -233,7 +233,7 @@ namespace Market.WebAPI.Migrations
                     b.HasIndex("Name", "ShopId")
                         .IsUnique();
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Market.DAL.Entities.Market.Shop", b =>
@@ -257,7 +257,7 @@ namespace Market.WebAPI.Migrations
                         .IsUnique()
                         .HasFilter("[ManagerId] IS NOT NULL");
 
-                    b.ToTable("Shops");
+                    b.ToTable("Shops", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

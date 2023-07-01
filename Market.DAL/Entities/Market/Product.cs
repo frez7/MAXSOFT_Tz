@@ -1,4 +1,6 @@
 ﻿using Market.DAL.Common;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Market.DAL.Entities.Market
 {

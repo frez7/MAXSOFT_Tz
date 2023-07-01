@@ -58,5 +58,13 @@ namespace Market.WebAPI.Controllers
         {
             return await _productService.DeleteProduct(productId);
         }
+
+
+        [HttpGet("all/users")]
+        //Эндпоинт для показа информации о всех пользователях в базе
+        public async Task<ListProfileResponse> GetAllUsers()
+        {
+            return await _sellerManagerService.GetAllUsers();
+        }
     }
 }

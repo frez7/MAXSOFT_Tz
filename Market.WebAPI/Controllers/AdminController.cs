@@ -15,9 +15,11 @@ namespace Market.WebAPI.Controllers
     public class AdminController : Controller
     {
         private readonly AdminService _adminService;
-        public AdminController(AdminService adminService)
+        private readonly SellerManagerService _sellerManagerService;
+        public AdminController(AdminService adminService, SellerManagerService sellerManagerService)
         {
             _adminService = adminService;
+            _sellerManagerService = sellerManagerService;
         }
         [HttpPost("create-user")]
         //Эндпоинт для создания пользователя администратором
@@ -42,6 +44,12 @@ namespace Market.WebAPI.Controllers
         public async Task<List<Role>> GetAllRoles()
         {
             return await _adminService.GetAllRoles();
+        }
+        [HttpGet("all/users")]
+        //Эндпоинт для показа информации о всех пользователях в базе
+        public async Task<ListProfileResponse> GetAllUsers()
+        {
+            return await _sellerManagerService.GetAllUsers();
         }
     }
 }

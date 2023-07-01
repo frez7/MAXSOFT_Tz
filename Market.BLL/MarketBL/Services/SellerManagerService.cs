@@ -2,6 +2,7 @@
 using Market.DAL.Data.Repositories;
 using Market.DAL.Entities.Identity;
 using Market.Domain.Common;
+using Market.Domain.DTOs;
 using Market.Domain.Responses;
 
 namespace Market.BLL.MarketBL.Services
@@ -76,6 +77,45 @@ namespace Market.BLL.MarketBL.Services
                 return new Response(200, true, "Вы успешно удалили продавца с вашего магазина!");
             }
             return new Response(400, true, "Произошла некая ошибка при удалении продавца!");
+        }
+        /// <summary>
+        /// Возвращает информацию о всех пользователях в базе
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ListProfileResponse> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllAsync();
+            var profileDTOs = new List<ProfileDTO>();
+            foreach (var user in users)
+            {
+                var profileDTO = new ProfileDTO();
+                var userRoles = await _getService.GetUserRoles(user.Id);
+                var userShop = await _getService.GetUserShop(user.Id);
+                if (userShop == null)
+                {
+                    profileDTO = new ProfileDTO
+                    {
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        UserName = user.UserName,
+                        ShopName = null,
+                        Roles = userRoles
+                    };
+                }
+                else
+                {
+                    profileDTO = new ProfileDTO
+                    {
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        UserName = user.UserName,
+                        ShopName = userShop.Name,
+                        Roles = userRoles
+                    };
+                }
+                profileDTOs.Add(profileDTO);
+            }
+            return new ListProfileResponse(200, true, null, profileDTOs);
         }
     }
 }

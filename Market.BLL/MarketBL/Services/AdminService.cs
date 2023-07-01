@@ -12,23 +12,26 @@ using System.Web.Http;
 
 namespace Market.BLL.MarketBL.Services
 {
+    /// <summary>
+    /// Сервис для работы с контроллером администратора
+    /// </summary>
     public class AdminService
     {
         private readonly IRepository<Role> _roleRepository;
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Shop> _shopRepository;
         private readonly IRepository<IdentityUserRole<int>> _identityUserRoleRepository;
-        private readonly ShopRepository _shopRepository;
         private readonly IMapper _mapper;
         private readonly GetService _getService;
-        public AdminService(IRepository<Role> roleRepository, IRepository<User> userRepository, IRepository<IdentityUserRole<int>> identityUserRoleRepository,
-            ShopRepository shopRepository, IMapper mapper, GetService getService)
+        public AdminService(IRepository<Role> roleRepository, IRepository<User> userRepository, IRepository<IdentityUserRole<int>> identityUserRoleRepository
+            , IMapper mapper, GetService getService, IRepository<Shop> shopRepository)
         {
             _roleRepository = roleRepository;
             _userRepository = userRepository;
             _identityUserRoleRepository = identityUserRoleRepository;
-            _shopRepository = shopRepository;
             _mapper = mapper;
             _getService = getService;
+            _shopRepository = shopRepository;
         }
         /// <summary>
         /// Метод для возвращения всех ролей, которые есть в системе.
@@ -73,7 +76,10 @@ namespace Market.BLL.MarketBL.Services
             await _identityUserRoleRepository.AddAsync(userRole);
             return new Response(200, true, "Вы успешно создали новый профиль для сотрудника!");
         }
-
+        /// <summary>
+        /// Метод для создания магазина.
+        /// </summary>
+        /// <returns></returns>
         public async Task<Response> CreateShop(CreateShopRequest request)
         {
             var user = await _userRepository.GetByIdAsync(request.ManagerId);
@@ -92,6 +98,10 @@ namespace Market.BLL.MarketBL.Services
             await _userRepository.UpdateAsync(user);
             return new Response(200, true, "Вы успешно создали магазин!");
         }
+        /// <summary>
+        /// Метод для возвращения всех магазинов
+        /// </summary>
+        /// <returns></returns>
         public async Task<ListShopResponse> GetAllShops()
         {
             var shops = await _shopRepository.GetAllAsync();

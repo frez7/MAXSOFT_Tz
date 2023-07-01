@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Market.Domain.DTOs
 {
+    /// <summary>
+    /// DTO Профиля
+    /// </summary>
     public class ProfileDTO
     {
         public int Id { get; set; }

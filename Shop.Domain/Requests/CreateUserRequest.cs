@@ -1,5 +1,8 @@
 ﻿namespace Market.Domain.Requests
 {
+    /// <summary>
+    /// Модель запроса создания пользователя администратором
+    /// </summary>
     public class CreateUserRequest
     {
         public string FullName { get; set; }

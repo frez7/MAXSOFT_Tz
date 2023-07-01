@@ -1,5 +1,8 @@
 ﻿namespace Market.Domain.DTOs
 {
+    /// <summary>
+    /// DTO Товара
+    /// </summary>
     public class ProductDTO
     {
         public int Id { get; set; }

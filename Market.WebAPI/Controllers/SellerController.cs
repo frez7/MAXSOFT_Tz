@@ -9,6 +9,7 @@ namespace Market.WebAPI.Controllers
     [ApiController]
     [Route("api/seller")]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Seller")]
+    //Контроллер для реализации работы продавца
     public class SellerController : Controller
     {
         private readonly ProductService _productService;
@@ -17,11 +18,13 @@ namespace Market.WebAPI.Controllers
             _productService = productService;
         }
         [HttpGet("shop/products")]
+        //Эндпоинт для возвращения всех товаров магазина
         public async Task<ListProductResponse> GetAllShopProducts()
         {
             return await _productService.GetAllShopProducts();
         }
         [HttpPut("shop/product/sell")]
+        //Эндпоинт для продажи товаров из магазина
         public async Task<Response> SellProduct(int productId, int count)
         {
             return await _productService.SellProduct(productId, count);

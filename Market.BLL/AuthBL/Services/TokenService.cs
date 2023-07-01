@@ -6,6 +6,9 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Market.BLL.AuthBL.Services
 {
+    /// <summary>
+    /// Сервис для работы с токенами авторизации
+    /// </summary>
     public class TokenService
     {
         private readonly IConfiguration _configuration;

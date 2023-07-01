@@ -12,16 +12,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Market.BLL.MarketBL.Services
 {
+    /// <summary>
+    /// Сервис для работы с товарами магазина
+    /// </summary>
     public class ProductService
     {
-        private readonly IRepository<User> _userRepository;
         private readonly ProductRepository _productRepository;
         private readonly GetService _getService;
         private readonly IMapper _mapper;
-        public ProductService(IRepository<User> userRepository, GetService getService, ProductRepository productRepository,
+        public ProductService(GetService getService, ProductRepository productRepository,
             IMapper mapper)
         {
-            _userRepository = userRepository;
             _getService = getService;
             _productRepository = productRepository;
             _mapper = mapper;

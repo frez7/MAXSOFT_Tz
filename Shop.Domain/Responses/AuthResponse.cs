@@ -2,6 +2,9 @@
 
 namespace Market.Domain.Responses
 {
+    /// <summary>
+    /// Класс Response для авторизации
+    /// </summary>
     public class AuthResponse : Response
     {
         public string AccessToken { get; set; }

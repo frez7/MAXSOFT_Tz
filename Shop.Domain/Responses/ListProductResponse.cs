@@ -3,6 +3,9 @@ using Market.Domain.DTOs;
 
 namespace Market.Domain.Responses
 {
+    /// <summary>
+    /// Класс Response для возвращения списка товаров
+    /// </summary>
     public class ListProductResponse : Response
     {
         public List<ProductDTO> Products { get; set; }

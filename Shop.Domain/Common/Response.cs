@@ -2,6 +2,9 @@
 
 namespace Market.Domain.Common
 {
+    /// <summary>
+    /// Класс базового Response
+    /// </summary>
     public class Response
     {
         public int StatusCode { get; set; }

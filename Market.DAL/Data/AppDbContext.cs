@@ -7,8 +7,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Market.DAL.Data
 {
+    /// <summary>
+    /// Контекст базы данных 
+    /// </summary>
     public class AppDbContext : IdentityDbContext<User, Role, int>
     {
+        //Добавление DbSet'ов для сущностей
         public DbSet<User> Users { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -17,6 +21,7 @@ namespace Market.DAL.Data
         {
 
         }
+        //Настройка конфигурации для базы данных, добавление json файла хранящего connection string
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -40,18 +45,21 @@ namespace Market.DAL.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //Проверка на уникальность имени товара в рамках магазина
-
+            
+            //Настройка каскадного удаления для товара
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Shop)
                 .WithMany(s => s.Products)
                 .HasForeignKey(p => p.ShopId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            //Проверка на уникальность имени товара в рамках магазина
             modelBuilder.Entity<Product>()
                 .HasIndex(p => new { p.Name, p.ShopId })
                 .IsUnique();
 
+            //Настройка индексов для избежания конфликтов при множественной связи
+            //пользователя. (Один к одному, один ко многим)
             modelBuilder.Entity<Shop>()
                 .HasOne(s => s.Manager)
                 .WithOne()
@@ -63,12 +71,14 @@ namespace Market.DAL.Data
                 .HasForeignKey(u => u.ShopId)
                 .IsRequired(false);
 
+            //Seed для ролей пользователя
             modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = "Seller", NormalizedName = "SELLER".ToUpper() });
             modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = "Manager", NormalizedName = "MANAGER".ToUpper() });
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Admin", NormalizedName = "ADMIN".ToUpper() });
 
             var hasher = new PasswordHasher<User>();
             
+            //Seed пользователей
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = 1,
@@ -108,6 +118,7 @@ namespace Market.DAL.Data
                 SecurityStamp = Guid.NewGuid().ToString(),
                 FullName = "Менеджер Менеджеров Менеджерович",
             });
+            //Seed для соединения пользователей и ролей
             modelBuilder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>
             {
                 RoleId = 1,

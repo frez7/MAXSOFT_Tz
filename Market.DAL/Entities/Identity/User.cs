@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Market.DAL.Entities.Identity
 {
+    /// <summary>
+    /// Класс пользователя наследуемого от IdentityUser
+    /// </summary>
     public class User : IdentityUser<int>
     {
         public string FullName { get; set; }

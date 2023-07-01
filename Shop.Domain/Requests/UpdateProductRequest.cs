@@ -1,5 +1,8 @@
 ﻿namespace Market.Domain.Requests
 {
+    /// <summary>
+    /// Модель запроса обновления товара
+    /// </summary>
     public class UpdateProductRequest
     {
         public int Id { get; set; }

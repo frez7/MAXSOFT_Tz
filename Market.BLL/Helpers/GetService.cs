@@ -7,6 +7,9 @@ using System.Security.Claims;
 
 namespace Market.BLL.Helpers
 {
+    /// <summary>
+    /// Сервис для быстрого нахождения информации о пользователе
+    /// </summary>
     public class GetService
     {
         private readonly IRepository<User> _userRepository;
@@ -21,6 +24,11 @@ namespace Market.BLL.Helpers
             _shopRepository = shopRepository;
             _userManager = userManager;
         }
+
+        /// <summary>
+        /// Метод для возвращения сущности текущего пользователя
+        /// </summary>
+        /// <returns></returns>
         public async Task<User> GetCurrentUser()
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -29,12 +37,10 @@ namespace Market.BLL.Helpers
             return user;
 
         }
-        public async Task<int> GetCurrentUserId()
-        {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            int.TryParse(userId, out var id);
-            return id;
-        }
+        /// <summary>
+        /// Метод для возвращения ролей по айди пользователя
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<string>> GetUserRoles(int userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
@@ -42,6 +48,10 @@ namespace Market.BLL.Helpers
 
             return (List<string>)roles;
         }
+        /// <summary>
+        /// Методл для возвращения сущности магазина в котором работает пользователь
+        /// </summary>
+        /// <returns></returns>
         public async Task<Shop> GetUserShop(int userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);

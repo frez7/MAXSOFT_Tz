@@ -1,5 +1,8 @@
 ﻿namespace Market.DAL.Data.Repositories
 {
+    /// <summary>
+    /// Интерфейс базового репозитория 
+    /// </summary>
     public interface IRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();

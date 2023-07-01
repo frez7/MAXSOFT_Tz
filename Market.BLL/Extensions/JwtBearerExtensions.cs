@@ -9,6 +9,7 @@ using System.Text;
 
 namespace Market.BLL.Extensions
 {
+    //Добавление extensions, для класса конфигурации для работы с токенами
     public static class JwtBearerExtensions
     {
         public static List<Claim> CreateClaims(this User user, List<Role> roles)

@@ -3,6 +3,9 @@ using Market.Domain.DTOs;
 
 namespace Market.Domain.Responses
 {
+    /// <summary>
+    /// Класс Response для возвращения списка профилей пользователей
+    /// </summary>
     public class ListProfileResponse : Response
     {
         public List<ProfileDTO> Profiles { get; set; }

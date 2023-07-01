@@ -2,6 +2,9 @@
 
 namespace Market.DAL.Data.Repositories
 {
+    /// <summary>
+    /// Класс репозитория для работы с товарами
+    /// </summary>
     public class ProductRepository : Repository<Product>
     {
         private readonly AppDbContext _context;

@@ -6,6 +6,9 @@ using Market.Domain.Responses;
 
 namespace Market.BLL.MarketBL.Services
 {
+    /// <summary>
+    /// Сервис для менеджмента продавцов магазина
+    /// </summary>
     public class SellerManagerService
     {
         private readonly IRepository<User> _userRepository;

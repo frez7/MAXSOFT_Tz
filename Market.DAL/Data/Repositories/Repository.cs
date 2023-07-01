@@ -2,6 +2,9 @@
 
 namespace Market.DAL.Data.Repositories
 {
+    /// <summary>
+    /// Класс базового репозитория
+    /// </summary>
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly AppDbContext _context;

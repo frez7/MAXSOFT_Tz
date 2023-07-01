@@ -14,19 +14,21 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Добавление db context и настройка библиотеки Identity для работы с пользователями и ролями.
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddIdentity<User, Role>().
     AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+//Добавление экземпляров репозитория для каждой нужной сущности
 builder.Services.AddTransient<IRepository<Shop>, Repository<Shop>>();
 builder.Services.AddTransient<IRepository<Product>, Repository<Product>>();
 builder.Services.AddTransient<IRepository<User>, Repository<User>>();
 builder.Services.AddTransient<IRepository<Role>, Repository<Role>>();
 builder.Services.AddTransient<IRepository<IdentityUserRole<int>>, Repository<IdentityUserRole<int>>>();
 builder.Services.AddTransient<ProductRepository>();
-builder.Services.AddTransient<ShopRepository>();
 
+//Добавление экземпляров сервисов для работы с контроллерами
 builder.Services.AddTransient<AuthService>();
 builder.Services.AddTransient<GetService>();
 builder.Services.AddTransient<TokenService>();
@@ -34,10 +36,12 @@ builder.Services.AddTransient<AdminService>();
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<SellerManagerService>();
 
+//Добавление Automapper и добавление к нему класса содержащего конфигурацию
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+//Настройка Swagger для работы с Bearer token
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -69,6 +73,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+//Добавил некоторую политику корс, разрешающую использовать все скрипты и виды сообщений
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
@@ -79,6 +84,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
+//Простенькая настройка аутентификации для JWT токенов
 builder.Services.AddAuthentication(opt => {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -108,6 +114,7 @@ builder.Services.AddAuthorization(options =>
 var app = builder.Build();
 
 app.UseSwagger();
+//Добавил тут эндпоинт для страницы со сваггером (для веб-деплоя)
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "MaxSoftMarket");

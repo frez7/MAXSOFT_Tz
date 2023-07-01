@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Market.DAL.Entities.Market
 {
+    /// <summary>
+    /// Класс товара наследуемого от BaseEntity
+    /// </summary>
     public class Product : BaseEntity<int>
     {
         public string Name { get; set; }

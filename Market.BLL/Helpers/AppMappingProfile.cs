@@ -9,6 +9,7 @@ namespace Market.BLL.Helpers
     {
         public AppMappingProfile()
         {
+            //Добавление некоторых сущностей для автомаппинга
             CreateMap<Shop, ShopDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
         }
